@@ -1,0 +1,38 @@
+.skin-image-container {
+  margin: 20px auto;
+  padding: 10px;
+  background-color: #222;
+  border-radius: 10px;
+  display: inline-block;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+  overflow: hidden; /* Dışarı taşan blur efektini gizler */
+}
+
+.skin-image {
+  width: 400px;
+  height: 250px;
+  border-radius: 8px;
+  object-fit: cover;
+  transition: filter 0.8s ease, box-shadow 0.5s ease;
+}
+
+.skin-image.win-reveal {
+  box-shadow: 0 0 20px #2e7d32;
+  transform: scale(1.02);
+}
+
+.hint-box {
+  background-color: #ff9800;
+  color: #121212;
+  padding: 15px;
+  margin: 0 auto 20px auto;
+  width: 60%;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  animation: pop 0.5s ease forwards;
+}
+
+@keyframes pop {
+  0% { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}

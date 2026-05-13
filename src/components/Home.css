@@ -1,0 +1,135 @@
+/* Sayfanın arka plan resmi ve karanlık kaplaması */
+.home-wrapper {
+  /* position, background ve min-height kısımlarını sildik */
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 50px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.home-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 600px;
+}
+
+.main-title {
+  font-size: 3.5rem;
+  font-weight: 900;
+  letter-spacing: 5px;
+  color: #b00006; /* CS2 Turuncusu */
+  margin: 0;
+  text-shadow: 0px 4px 15px rgba(249, 168, 38, 0.3);
+}
+
+.sub-title {
+  font-family: 'Teko', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 500;
+  letter-spacing: 2px;
+  color: #fff;
+  margin-top: 0px; /* Logoya yakın olması için sıfırladık */
+  margin-bottom: 30px;
+}
+
+.menu-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%; /* Butonlar da çizgilerle aynı hizada uzar */
+  box-sizing: border-box;
+}
+
+/* Valdle Tarzı Buton Tasarımı */
+.menu-button {
+  display: flex;
+  align-items: center;
+  background-color: rgba(5, 8, 12, 0.85); /* Valdle tarzı ÇOK KOYU yarı şeffaf arkaplan */
+  border: 1px solid #333;
+  padding: 15px 25px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Üzerine gelince (Hover) yeni kırmızımızla parlasın */
+.menu-button:hover {
+  border-color: #b00006;
+  background-color: rgba(176, 0, 6, 0.1); /* Kırmızının çok hafif şeffaf hali */
+  box-shadow: 0 0 15px rgba(176, 0, 6, 0.2);
+  transform: scale(1.02);
+}
+
+.icon-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 20px;
+}
+
+.menu-icon {
+  width: 35px;
+  height: 35px;
+  color: #b00006; /* İkon rengini yeni kırmızıya eşitledik */
+  transition: color 0.2s;
+}
+
+.text-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.btn-title {
+  font-size: 1.5rem;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: #b00006; /* Başlık rengini yeni kırmızıya eşitledik */
+  margin-bottom: 5px;
+}
+
+.btn-desc {
+  font-size: 0.8rem;
+  color: #aaa;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+/* Hover durumunda yazıların daha parlak olması */
+.menu-button:hover .btn-title {
+  color: #fff;
+}
+.menu-button:hover .btn-desc {
+  color: #ddd;
+}
+
+/* En alt kısımdaki Valdle tarzı uyarı yazısı */
+.footer-disclaimer {
+  margin-top: 50px;
+  text-align: center;
+  font-size: 0.75rem;
+  color: #666;
+  max-width: 500px;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 15px;
+  font-weight: bold;
+  color: #aaa;
+}
+
+.footer-links span {
+  cursor: pointer;
+}
+
+.footer-links span:hover {
+  color: #b00006;
+}

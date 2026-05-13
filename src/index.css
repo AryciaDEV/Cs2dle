@@ -1,0 +1,815 @@
+/* Google Fonts'tan köşeli ve e-spor havasında bir font çekiyoruz (Teko veya Rajdhani) */
+@import url('https://fonts.googleapis.com/css2?family=Teko:wght@500;700&display=swap');
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background: linear-gradient(rgba(10, 15, 20, 0.6), rgba(10, 15, 20, 0.8)), url('/images/bg.png') center/cover fixed no-repeat !important;
+  background-color: #0a0f14;
+  color: white;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  
+  /* İŞTE SİHİRLİ DOKUNUŞ: Sağa sola kaymayı tamamen engeller */
+  overflow-x: hidden; 
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+  background: transparent !important; 
+  
+  /* Garantilemek için buraya da ekliyoruz */
+  overflow-x: hidden;
+}
+
+.app-container {
+  padding: 20px;
+  min-height: 100vh;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* =========================================
+   ORTAK LOGO (HEADER) TASARIMI
+   ========================================= */
+.global-header {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 0px; /* 20px'ten 0'a düşürdük */
+}
+
+.global-logo {
+  font-family: 'Teko', sans-serif;
+  font-size: 5rem;
+  color: #b00006; /* YENİ KOYU KIRMIZI RENGİMİZ */
+  margin: 0;
+  margin-bottom: -15px; /* Altındaki yazıyı logoya iyice yaklaştırmak için eksi değer verdik */
+  cursor: pointer;
+  display: inline-block;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), color 0.3s;
+  letter-spacing: 5px;
+  line-height: 1;
+}
+
+.global-logo:hover {
+  transform: scale(1.1);
+  color: #fff;
+  text-shadow: 0 0 15px #b00006; /* Parlama efektini de yeni renge uyarladık */
+}
+
+.game-container, .home-content {
+  width: 100%;
+  max-width: 500px !important; /* Önceki ideal boyuta döndük ve kilitledik */
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
+/* =========================================
+   SAYFA İÇİ BAŞLIKLAR VE ÇİZGİLER
+   ========================================= */
+h2 {
+  font-family: 'Teko', sans-serif;
+  font-size: 2rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 2px !important;
+  color: #fff !important;
+  text-transform: uppercase;
+  text-align: center;
+  margin-top: 20px !important;
+  margin-bottom: 30px;
+  border-top: 2px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+  padding: 10px 0;
+  width: 100%;
+  box-sizing: border-box;
+  
+  /* YENİ EKLENEN KISIM: Yazı ve ikonu yan yana ortalar */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+/* =========================================
+   INFO İKONU VE TOOLTIP (HOW TO PLAY)
+   ========================================= */
+.tooltip-container {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.info-icon {
+  width: 24px;
+  height: 24px;
+  color: #ff4655; /* Valdle Kırmızısı */
+  transition: transform 0.2s ease;
+}
+
+.tooltip-container:hover .info-icon {
+  transform: scale(1.1);
+  color: #ff4655; /* Üzerine gelince biraz parlasın */
+}
+
+.htp-title {
+  color: #ff4655;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 1.1rem;
+  font-weight: 900;
+  margin-bottom: 15px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.how-to-play-box {
+  visibility: hidden;
+  background-color: rgba(15, 20, 25, 0.98); /* Koyu siyah/lacivert arkaplan */
+  border: 1px solid #ff4655; /* Kırmızı ince çerçeve */
+  border-radius: 6px;
+  padding: 20px;
+  position: absolute;
+  z-index: 100;
+  top: 150%; /* İkonun altından açılır */
+  left: 50%;
+  transform: translateX(-50%);
+  width: max-content;
+  min-width: 380px; /* Geniş bir kutu olması için */
+  opacity: 0;
+  transition: opacity 0.2s, top 0.2s;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+  text-align: left;
+  cursor: default;
+}
+
+.tooltip-container:hover .how-to-play-box {
+  visibility: visible;
+  opacity: 1;
+  top: 130%; /* Aşağıdan yukarıya doğru zarifçe kayarak açılır */
+}
+
+.tooltip-text {
+  visibility: hidden;
+  background-color: #fff;
+  color: #0a0f14;
+  text-align: center;
+  padding: 5px 12px;
+  border-radius: 4px;
+  position: absolute;
+  z-index: 10;
+  bottom: 130%; /* İkonun tam üstünde çıkar */
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 0.8rem;
+  font-weight: bold;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.2s, bottom 0.2s;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+  letter-spacing: 0; /* Başlıktaki harf boşluğunu sıfırlar */
+}
+
+/* Küçük bir ok ucu efekti */
+.tooltip-text::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #fff transparent transparent transparent;
+}
+
+.tooltip-container:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+  bottom: 140%; /* Üzerine gelince hafifçe yukarı doğru çıkar */
+}
+
+.autocomplete-container, .attempts-list {
+width: 100% !important;
+  max-width: 100% !important; /* Varsa eski max-width'i ezer */
+  margin: 0 auto 30px auto !important;
+  position: relative;
+  box-sizing: border-box !important;
+}
+
+input[type="text"] {
+  width: 100% !important;
+  max-width: 100% !important;
+  background-color: rgba(15, 15, 15, 0.8) !important;
+  border: 1px solid #333 !important;
+  color: white !important;
+  padding: 15px 20px !important;
+  font-size: 1.1rem;
+  font-family: 'Teko', sans-serif;
+  letter-spacing: 1px;
+  outline: none;
+  transition: all 0.2s;
+  box-sizing: border-box !important;
+}
+/* =========================================
+   TAHMİN KUTULARI (Hücreler)
+   ========================================= */
+/* =========================================
+   TAHMİN LİSTESİ VE KUTULAR (Hücreler)
+   ========================================= */
+.attempts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* 10px'ten 20px'e çıkardık, araları daha ferah olacak */
+  width: 100%;
+  margin: 0 auto 30px auto;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.attempt-row {
+  display: flex;
+  justify-content: center;
+  gap: 10px; /* Yan yana duran kutuların arasındaki boşluk */
+  width: 100%;
+}
+
+.cell {
+  flex: 1; /* SİHİRLİ KOMUT: Başlıklarla birebir aynı genişlikte olmasını sağlar */
+  background-color: rgba(255, 70, 85, 0.9) !important;
+  border: none !important;
+  color: white;
+  font-family: 'Teko', sans-serif;
+  font-size: 1.2rem;
+  line-height: 1.1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 8px;
+  min-height: 60px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+  box-sizing: border-box;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.cell.correct {
+  background-color: rgba(100, 200, 100, 0.9) !important;
+  color: white !important;
+}
+
+.cell.wrong {
+  background-color: rgba(255, 70, 85, 0.9) !important;
+}
+
+/* Doğru Bilindiğinde Çıkan Kutucuk (Bunun da boyutunu hizalıyoruz) */
+.win-box {
+  background-color: rgba(10, 15, 20, 0.95) !important;
+  border: 2px solid #2e7d32 !important; /* Etrafındaki Yeşil Çizgi */
+  border-radius: 8px;
+  width: 100%;
+  padding: 30px 20px;
+  text-align: center;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  box-shadow: 0 0 20px rgba(46, 125, 50, 0.2) !important;
+  margin-bottom: 30px;
+}
+
+.gg-text {
+  font-size: 4rem !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important; /* Başlıktaki çizgileri sildik */
+  color: white !important;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.win-details {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  margin-bottom: 10px;
+}
+
+.win-image {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 5px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+  background-color: rgba(0,0,0,0.5);
+}
+
+.win-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+}
+
+.win-name {
+  background-color: #2e7d32; /* İsmin arkasındaki yeşil kutu */
+  color: white;
+  font-family: 'Teko', sans-serif;
+  font-size: 2.2rem;
+  padding: 5px 25px;
+  border-radius: 5px;
+  line-height: 1;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+  text-transform: uppercase;
+}
+
+.win-tries {
+  font-family: 'Teko', sans-serif;
+  font-size: 1.8rem;
+  color: white;
+}
+
+.try-count {
+  color: #b00006; /* Kırmızı Deneme Sayısı Rengi */
+}
+
+/* Şeffaf geçiş butonu */
+.next-mode-btn {
+  background-color: transparent !important;
+  color: white !important;
+  border: 1px solid white !important;
+  font-family: 'Teko', sans-serif;
+  font-size: 1.5rem;
+  padding: 10px 40px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-transform: uppercase;
+  margin-top: 15px;
+}
+
+.next-mode-btn:hover {
+  background-color: white !important;
+  color: #0a0f14 !important;
+}
+
+/* =========================================
+   TABLO BAŞLIKLARI (AGENT, GENDER vs.)
+   ========================================= */
+.agent-header-row, .team-header-row, .player-header-row {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 5px;
+  font-family: 'Teko', sans-serif;
+  font-size: 1.4rem;
+  color: #fff;
+  text-transform: uppercase;
+  width: 100%;
+}
+
+.agent-header-row div, .team-header-row div, .player-header-row div {
+  flex: 1; /* SİHİRLİ KOMUT: Genişliği eşit paylaşmalarını sağlar */
+  text-align: center;
+  border-bottom: 3px solid rgba(176, 0, 6, 0.8);
+  padding-bottom: 5px;
+  box-sizing: border-box;
+}
+
+/* =========================================
+   AÇILIR ARAMA LİSTESİ (Dropdown)
+   ========================================= */
+.dropdown-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100% !important;
+  background-color: rgba(15, 15, 15, 0.98) !important; /* Koyu, opak arkaplan */
+  border: 1px solid #444 !important;
+  border-top: none !important;
+  border-radius: 0 0 5px 5px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 250px;
+  overflow-y: auto;
+  z-index: 1000; /* Diğer her şeyin (resimlerin vs.) üstünde görünmesini sağlar */
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.8);
+  box-sizing: border-box !important;
+}
+
+.dropdown-list li {
+  padding: 12px 20px;
+  cursor: pointer;
+  font-family: 'Teko', sans-serif;
+  font-size: 1.3rem;
+  color: #ccc;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transition: background-color 0.2s, color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.dropdown-list li:hover {
+  background-color: rgba(176, 0, 6, 0.9) !important; /* Valdle kırmızısı ile parlama */
+  color: white;
+}
+
+.dropdown-icon {
+  width: 35px;
+  height: 35px;
+  object-fit: cover;
+  border-radius: 3px;
+  background-color: rgba(0, 0, 0, 0.5); /* İkonların arkası şık dursun diye */
+}
+
+.no-result {
+  padding: 12px 20px;
+  font-family: 'Teko', sans-serif;
+  font-size: 1.2rem;
+  color: #888;
+  text-align: center;
+}
+
+/* (Mevcut .win-stats sınıfını isim çakışmaması için .win-stats-info yaptık, eğer .win-stats varsa onu silebilirsin) */
+.win-stats-info {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+}
+
+/* =========================================
+   STATS BUTONU VE PANELİ
+   ========================================= */
+.stats-toggle-btn {
+  background-color: transparent !important;
+  color: white !important;
+  border: 1px solid white !important;
+  font-family: 'Teko', sans-serif;
+  font-size: 1.5rem;
+  padding: 5px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+  transition: all 0.2s;
+  letter-spacing: 1px;
+}
+
+.stats-toggle-btn:hover {
+  background-color: white !important;
+  color: #0a0f14 !important;
+}
+
+.stats-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.stats-panel {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 500px;
+  border: 1px solid #444;
+  border-radius: 5px;
+  padding: 15px 20px;
+  margin-top: 15px;
+  background-color: rgba(15, 15, 15, 0.5);
+  box-sizing: border-box;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 5px;
+}
+
+.stat-label {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 0.7rem;
+  font-weight: bold;
+  color: #fff;
+  border-bottom: 2px solid #b00006; /* Altındaki Kırmızı Çizgi */
+  padding-bottom: 5px;
+  letter-spacing: 1px;
+}
+
+.stat-value {
+  font-family: 'Teko', sans-serif;
+  font-size: 2rem;
+  color: #fff;
+  line-height: 1;
+  margin-top: 5px;
+}
+
+/* =========================================
+   REFRESHES IN (GERİ SAYIM)
+   ========================================= */
+.refreshes-in {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2); /* Üstündeki ince ayırıcı çizgi */
+  padding-top: 15px;
+  width: 60%;
+}
+
+.refreshes-label {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: #fff;
+  letter-spacing: 1px;
+  margin-bottom: 5px;
+}
+
+.refreshes-timer {
+  font-family: 'Teko', sans-serif;
+  font-size: 2.5rem;
+  color: #fff;
+  line-height: 1;
+}
+
+.how-to-play-box p {
+  color: #eaeaea;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0 0 10px 0;
+  text-transform: none; /* H2'den gelen büyük harf zorunluluğunu ezer */
+  letter-spacing: 0;
+  font-weight: 500;
+}
+
+.how-to-play-box p:last-child {
+  margin-bottom: 0;
+}
+
+/* =========================================
+   GLOBAL FOOTER (TÜM SAYFALARIN ALTI)
+   ========================================= */
+.global-footer {
+  width: 100%;
+  padding: 40px 20px 20px 20px;
+  text-align: center;
+  margin-top: auto; /* Sayfa içeriği kısaysa bile en alta itmesini sağlar */
+  box-sizing: border-box;
+}
+
+.footer-text {
+  color: rgba(255, 255, 255, 0.4); /* Fotoğraftaki gibi soluk gri yazı */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  margin-bottom: 15px;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.footer-links a {
+  color: rgba(255, 255, 255, 0.7);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 0.95rem;
+  font-weight: bold;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+  color: #fff; /* Üzerine gelince parlasın */
+}
+
+/* =========================================
+   DİĞER OYUNLAR (MORE GAMES) KUTUSU
+   ========================================= */
+.more-games-container {
+  background-color: rgba(15, 20, 25, 0.6); /* Temamıza uygun koyu arka plan */
+  border: 1px solid rgba(255, 255, 255, 0.1); /* İnce şık bir çerçeve */
+  border-top: 2px solid #b00006; /* Üstünde Valdle kırmızısı bir çizgi */
+  border-radius: 8px;
+  padding: 20px 30px;
+  max-width: 500px;
+  margin: 0 auto 40px auto; /* Footer yazısından ayırmak için alttan boşluk */
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.more-games-title {
+  color: #b00006;
+  font-family: 'Teko', sans-serif;
+  font-size: 1.5rem;
+  letter-spacing: 1px;
+  margin-bottom: 2px;
+  line-height: 1.2;
+}
+
+.more-games-subtitle {
+  color: #eaeaea;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 1rem;
+  margin-bottom: 20px;
+}
+
+.more-games-list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px; /* Oyunlar arası boşluk */
+}
+
+.game-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  transition: transform 0.2s ease;
+}
+
+.game-link:hover {
+  transform: translateY(-5px); /* Üzerine gelince hafifçe yukarı zıplar */
+}
+
+.game-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%; /* İkonları yuvarlak yapar */
+  object-fit: cover;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  margin-bottom: 8px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.game-link:hover .game-icon {
+  border-color: #b00006;
+  box-shadow: 0 0 10px rgba(255, 70, 85, 0.5);
+}
+
+.game-name {
+  color: #fff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 0.85rem;
+  font-weight: bold;
+}
+
+/* =========================================
+   HÜCRE (CELL) SOLDAN SAĞA AÇILMA ANİMASYONU
+   ========================================= */
+.attempt-row {
+  perspective: 1000px; /* 3D takla efekti için derinlik algısı */
+}
+
+.attempt-row .cell {
+  opacity: 0; /* Animasyon başlamadan önce görünmez olsun */
+  animation: flipIn 0.5s ease-out forwards;
+}
+
+/* Sırasıyla her bir sütun için artan gecikme (delay) süreleri */
+.attempt-row .cell:nth-child(1) { animation-delay: 0.1s; }
+.attempt-row .cell:nth-child(2) { animation-delay: 0.4s; }
+.attempt-row .cell:nth-child(3) { animation-delay: 0.7s; }
+.attempt-row .cell:nth-child(4) { animation-delay: 1.0s; }
+.attempt-row .cell:nth-child(5) { animation-delay: 1.3s; }
+.attempt-row .cell:nth-child(6) { animation-delay: 1.6s; }
+
+/* 3D Takla Atarak Açılma Efekti (Wordle Tarzı) */
+@keyframes flipIn {
+  0% {
+    transform: rotateX(90deg); /* Kutu arkaya doğru yatık başlar */
+    opacity: 0;
+  }
+  100% {
+    transform: rotateX(0); /* Kutu dik konuma gelir */
+    opacity: 1;
+  }
+}
+
+/* =========================================
+   AÇILIR PENCERELER (MODAL) - ABOUT & PRIVACY
+   ========================================= */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 20px;
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+.modal-content {
+  background-color: #0f1419; /* Koyu CS2dle teması */
+  border: 2px solid #b00006; /* Valdle Kırmızısı Çerçeve */
+  border-radius: 8px;
+  padding: 35px 30px;
+  width: 100%;
+  max-width: 600px;
+  max-height: 85vh; /* Ekrana sığmazsa kaydırma çubuğu çıkarır */
+  overflow-y: auto;
+  position: relative;
+  color: #eaeaea;
+  text-align: left;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+}
+
+/* Modal Kapatma Butonu (Çarpı) */
+.modal-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  color: #b00006;
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.modal-close:hover {
+  transform: scale(1.2);
+}
+
+/* Modal İçindeki Yazıların Tasarımı */
+.modal-content h2 {
+  color: #b00006;
+  font-family: 'Teko', sans-serif;
+  font-size: 2.2rem;
+  letter-spacing: 1px;
+  margin-top: 0;
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(255, 70, 85, 0.3);
+  padding-bottom: 10px;
+}
+
+.modal-content h3 {
+  color: #fff;
+  font-size: 1.2rem;
+  margin-top: 25px;
+  margin-bottom: 10px;
+}
+
+.modal-content p, .modal-content li {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 10px;
+  color: #d1d1d1;
+}
+
+.modal-content ul {
+  padding-left: 20px;
+  margin-bottom: 20px;
+}
+
+.modal-content a {
+  color: #b00006;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.modal-content a:hover {
+  text-decoration: underline;
+}
+
+/* Modal İçi Özel Kaydırma Çubuğu (Scrollbar) */
+.modal-content::-webkit-scrollbar {
+  width: 8px;
+}
+.modal-content::-webkit-scrollbar-track {
+  background: #0a0f14; 
+  border-radius: 4px;
+}
+.modal-content::-webkit-scrollbar-thumb {
+  background: #b00006; 
+  border-radius: 4px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}

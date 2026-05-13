@@ -1,0 +1,46 @@
+.team-header-row {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #aaa;
+  font-size: 0.9rem;
+}
+
+.team-header-row div {
+  width: 120px;
+  text-align: center;
+}
+
+.team-name-cell {
+  background-color: #1565c0; /* Mavi arka plan */
+  width: 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 0.9rem;
+}
+
+.team-logo-small {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+/* Animasyonlar */
+@keyframes flipReveal {
+  0% { transform: rotateX(-90deg); opacity: 0; }
+  100% { transform: rotateX(0deg); opacity: 1; }
+}
+
+.attempt-row .cell {
+  width: 120px;
+  opacity: 0; 
+  animation: flipReveal 0.6s ease forwards;
+  transform-origin: center;
+}
+
+.attempt-row .cell:nth-child(1) { animation-delay: 0.1s; }
+.attempt-row .cell:nth-child(2) { animation-delay: 0.5s; }
+.attempt-row .cell:nth-child(3) { animation-delay: 0.9s; }

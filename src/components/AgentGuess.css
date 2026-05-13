@@ -1,0 +1,102 @@
+.game-container {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  font-family: sans-serif;
+}
+
+.guess-form {
+  margin-bottom: 20px;
+}
+
+.guess-form input {
+  padding: 10px;
+  font-size: 16px;
+  width: 60%;
+}
+
+.guess-form button {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.error-text {
+  color: red;
+  font-weight: bold;
+}
+
+.attempt-row {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.cell {
+  padding: 15px;
+  width: 100px;
+  border-radius: 5px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #333;
+  color: white;
+}
+
+.cell.correct {
+  background-color: #2e7d32; /* Yeşil */
+}
+
+.cell.wrong {
+  background-color: #c62828; /* Kırmızı */
+}
+
+.agent-name {
+  background-color: #1565c0; /* Mavi */
+}
+
+.back-btn { background: none; border: 1px solid white; color: white; padding: 5px 10px; cursor: pointer; border-radius: 5px; float: left;}
+.autocomplete-container { position: relative; width: 60%; margin: 0 auto 20px auto; }
+.autocomplete-container input { width: 100%; padding: 12px; box-sizing: border-box; font-size: 16px; background-color: #222; color: white; border: 1px solid #555; border-radius: 5px;}
+.dropdown-list { position: absolute; top: 100%; left: 0; right: 0; background-color: #333; border: 1px solid #555; list-style: none; padding: 0; margin: 5px 0 0 0; z-index: 10; max-height: 200px; overflow-y: auto; border-radius: 5px;}
+.dropdown-list li { padding: 10px; display: flex; align-items: center; gap: 15px; cursor: pointer; border-bottom: 1px solid #444; color: white;}
+.dropdown-list li:hover { background-color: #555; }
+.dropdown-icon { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; background-color: #222;}
+.win-box { background-color: #2e7d32; padding: 20px; border-radius: 10px; margin-bottom: 20px; color: white; animation: pop 0.5s ease-out;}
+.next-mode-btn { background-color: white; color: #2e7d32; padding: 10px 20px; font-size: 16px; font-weight: bold; border: none; border-radius: 5px; cursor: pointer; margin-top: 10px;}
+@keyframes pop { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+
+/* Kutuların kendi etrafında dönerek açılma efekti */
+@keyframes flipReveal {
+  0% {
+    transform: rotateX(-90deg);
+    opacity: 0;
+  }
+  100% {
+    transform: rotateX(0deg);
+    opacity: 1;
+  }
+}
+
+/* Tüm hücreleri başlangıçta gizliyoruz ve animasyonu bağlıyoruz */
+.attempt-row .cell {
+  opacity: 0; 
+  animation: flipReveal 0.6s ease forwards;
+  transform-origin: center; /* Merkezden dönsün */
+}
+
+/* Her bir kutu için gecikme (delay) süresi ekleyerek sırayla gelmelerini sağlıyoruz */
+.attempt-row .cell:nth-child(1) {
+  animation-delay: 0.1s; /* İsim hemen gelsin */
+}
+.attempt-row .cell:nth-child(2) {
+  animation-delay: 0.5s; /* Cinsiyet yarım saniye sonra */
+}
+.attempt-row .cell:nth-child(3) {
+  animation-delay: 0.9s; /* Ülke biraz daha sonra */
+}
+.attempt-row .cell:nth-child(4) {
+  animation-delay: 1.3s; /* Yıl en son gelsin */
+}

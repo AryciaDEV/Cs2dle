@@ -1,0 +1,56 @@
+.map-image-container {
+  width: 100%; /* Çizgiler ve arama kutusuyla aynı genişlik */
+  margin: 0 auto 30px auto;
+  padding: 0 !important; /* Boşlukları sıfırladık, resim tam oturacak */
+  background-color: transparent;
+  border-radius: 5px;
+  display: block;
+  overflow: hidden;
+  border: 1px solid #333;
+  box-sizing: border-box;
+}
+
+.map-image {
+  width: 100%; /* Konteyneri tam kaplar */
+  height: 280px;
+  display: block;
+  object-fit: cover;
+  transition: filter 0.8s ease, box-shadow 0.5s ease;
+}
+
+.map-image.win-reveal {
+  box-shadow: 0 0 20px #2e7d32;
+  transform: scale(1.02);
+}
+
+/* İpucu Kutusu (Valdle renklerine uyarlandı) */
+.hint-box {
+  background-color: rgba(176, 0, 6, 0.8); /* Yeni koyu kırmızı temamız */
+  color: #fff;
+  padding: 15px;
+  margin: 0 auto 20px auto;
+  width: 100%;
+  max-width: 600px; /* Başlık ve Inputlarla aynı uzunluk */
+  border-radius: 5px;
+  font-family: 'Teko', sans-serif;
+  font-size: 1.4rem;
+  letter-spacing: 1px;
+  animation: pop 0.5s ease forwards;
+  box-sizing: border-box;
+  text-align: center;
+  border: 1px solid #ff4655;
+}
+
+@keyframes pop {
+  0% { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.map-cell {
+  /* width: 600px !important; <- BUNU SİLDİK VEYA %100 YAPTIK */
+  width: 100% !important;
+  font-size: 1.5rem;
+  animation: flipReveal 0.5s ease forwards;
+  opacity: 0;
+  transform-origin: center;
+}
